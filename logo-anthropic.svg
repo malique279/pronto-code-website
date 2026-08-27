@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 40" height="32" fill="none">
+  <g fill="#37373d">
+    <!-- Anthropic symbol -->
+    <path d="M12 30 L20 10 L26 10 L34 30 L28.5 30 L26.8 25.5 L19.2 25.5 L17.5 30 Z M20.6 21.8 L25.4 21.8 L23 15 Z" fill="#37373d" />
+    <path d="M26.5 30 L32.5 14.5 L37.5 30 Z" fill="#37373d" opacity="0.8" />
+    <!-- ANTHROPIC text -->
+    <text x="44" y="26.5" font-family="'Geist', 'Inter', -apple-system, sans-serif" font-size="16" font-weight="700" letter-spacing="2px">ANTHROPIC</text>
+  </g>
+</svg>

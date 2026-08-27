@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" height="34" fill="none">
+  <g fill="#000000">
+    <!-- Official HighLevel 3-Arrow Icon -->
+    <g transform="translate(4, 5)">
+      <!-- Left Arrow (Medium) -->
+      <path d="M 0 10.5 L 5.5 2 L 11 10.5 Z" />
+      <rect x="3.5" y="9.5" width="4" height="16.5" rx="1" />
+      
+      <!-- Middle Arrow (Short) -->
+      <path d="M 9.5 15.5 L 15 7 L 20.5 15.5 Z" />
+      <rect x="13" y="14.5" width="4" height="11.5" rx="1" />
+      
+      <!-- Right Arrow (Tall) -->
+      <path d="M 19 8.5 L 24.5 0 L 30 8.5 Z" />
+      <rect x="22.5" y="7.5" width="4" height="18.5" rx="1" />
+    </g>
+    
+    <!-- HighLevel Wordmark -->
+    <text x="42" y="24" font-family="'Geist', 'Inter', -apple-system, sans-serif" font-size="19" font-weight="700" letter-spacing="-0.3px">HighLevel</text>
+  </g>
+</svg>
