@@ -1106,7 +1106,8 @@ a.button-small.primary:hover {
 
 @media screen and (max-width: 576px) {
   .footer-nav-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 2rem 1.25rem !important;
   }
   .footer-bottom-row {
     flex-direction: column !important;
