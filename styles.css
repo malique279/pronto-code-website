@@ -1766,6 +1766,13 @@ a.button-small.primary:hover {
   display: none !important;
 }
 
+/* Keep Contact in the right-side desktop actions, not the center nav links. */
+@media screen and (min-width: 992px) {
+  .navbar-menu-wrapper .navlink-wrap .mobile-only-nav {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 991px) {
   .navbar-wrapper {
     position: relative !important;
