@@ -7,7 +7,7 @@
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   
   <link href="https://cdn.prod.website-files.com/6943bb74ebfee7edeb271423/css/flo-click.shared.e616694aa.min.css" rel="stylesheet" type="text/css" />
-  <link href="styles.css?v=8" rel="stylesheet" type="text/css" />
+  <link href="styles.css?v=17" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=4" />
   <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png?v=4" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4" />
@@ -25,6 +25,7 @@
   </script>
 </head>
 <body>
+  <div class="page-load-curtain" aria-hidden="true"></div>
   <div class="page-wrapper">
     <!-- Navbar -->
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
@@ -70,7 +71,7 @@
               <h1>We help agencies automate their operations at scale</h1>
             </div>
             <div class="hero-description-wrap">
-              <p class="paragraph">We work with leading agencies around the world helping them build CRMs, set up project management, create automations, and build lead generation and follow-up systems.</p>
+              <p class="paragraph">We work with businesses around the world helping them build CRMs, set up project management, create automations, and build lead generation and follow-up systems.</p>
             </div>
             <div class="buttons-wrapper" style="display: flex; gap: 16px; align-items: center; justify-content: center;">
               <!-- Interactive Slide Toggle Button -->
@@ -97,7 +98,7 @@
 
       <!-- Infinite Logo Marquee Carousel -->
       <div class="logo-marquee-section">
-        <div class="brand-logo-subheading">Trusted by businesses worldwide</div>
+        <div class="brand-logo-subheading">Powered by the tools that run modern operations</div>
         <div class="logo-marquee-track-wrapper">
           <div class="logo-marquee-track">
             <!-- Set 1 -->
@@ -335,13 +336,13 @@
         <div class="w-layout-blockcontainer container w-container">
           <div class="section-header-wrap margin-bottom-large">
             <h2>How we work with your business</h2>
-            <p class="section-paragraph">With our solutions we help you insure data, analyze complex contracts and get actionable insights in minutes.</p>
+            <p class="section-paragraph">We design and implement AI-powered business process automation that eliminates manual work, connects your tools, and helps your team focus on growth.</p>
           </div>
           <div class="section-cards-wrapper">
             <div class="service-card-wrap space-between">
               <div class="feature-content-wrap">
                 <h3 class="feature-title">1. Blueprint</h3>
-                <p>First, we dig into how your agency actually runs. We look at your current tools, workflows, and where things break down.<br/><br/>From there, we map out a custom system designed around how your team works.</p>
+                <p>First, we dig into how your business actually runs. We look at your current tools, workflows, and where things break down.<br/><br/>From there, we map out a custom system designed around solving what causes the breakdown.</p>
               </div>
             </div>
 
@@ -373,36 +374,8 @@
               <p class="cta-paragraph">See how we can help your agency run smoother. Book a call and we'll walk you through it.</p>
             </div>
             
-            <div class="cal-com-embed">
-              <!-- Cal inline embed code begins -->
+            <div class="cal-com-embed" data-cal-embed>
               <div id="my-cal-inline-discovery-call"></div>
-              <script type="text/javascript">
-                (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-
-                Cal("init", "discovery-call", {origin:"https://app.cal.com"});
-
-                Cal.ns["discovery-call"]("inline", {
-                  elementOrSelector: "#my-cal-inline-discovery-call",
-                  config: {"layout":"month_view","theme":"dark"},
-                  calLink: "malique-benbow-bbb63n/30min"
-                });
-
-                Cal.ns["discovery-call"]("ui", {
-                  "theme": "dark",
-                  "hideEventTypeDetails": false,
-                  "layout": "month_view",
-                  "styles": {
-                    "cssVarsPerTheme": {
-                      "dark": {
-                        "--cal-bg": "#111111",
-                        "--cal-bg-muted": "#111111",
-                        "--cal-bg-emphasis": "#111111",
-                        "--cal-brand": "#111111"
-                      }
-                    }
-                  }
-                });
-              </script>
             </div>
           </div>
         </div>
@@ -520,7 +493,6 @@
     </footer>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js?v=8"></script>
+  <script src="script.js?v=9"></script>
 </body>
 </html>

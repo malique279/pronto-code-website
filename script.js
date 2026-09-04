@@ -246,11 +246,50 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // Interactive 3D Dotted Spinning Globe (Desktop)
   // ==========================================
+  initCalendarEmbed();
   initInteractiveGlobe();
 });
 
 function initInteractiveGlobe() {
   const canvas = document.getElementById('globe-canvas');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const container = canvas.parentElement;
+  if (!container) return;
+
+  let started = false;
+  const startGlobe = () => {
+    if (started) return;
+    started = true;
+
+    if (typeof THREE !== 'undefined') {
+      setupInteractiveGlobe(canvas);
+      return;
+    }
+
+    const threeScript = document.createElement('script');
+    threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    threeScript.async = true;
+    threeScript.onload = () => setupInteractiveGlobe(canvas);
+    document.head.appendChild(threeScript);
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    startGlobe();
+    return;
+  }
+
+  const globeObserver = new IntersectionObserver((entries) => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      globeObserver.disconnect();
+      startGlobe();
+    }
+  }, { rootMargin: '600px 0px', threshold: 0.01 });
+
+  globeObserver.observe(container);
+}
+
+function setupInteractiveGlobe(canvas) {
   if (!canvas || typeof THREE === 'undefined') return;
 
   const container = canvas.parentElement;
@@ -265,9 +304,9 @@ function initInteractiveGlobe() {
     canvas: canvas,
     antialias: true,
     alpha: true,
-    powerPreference: 'high-performance'
+    powerPreference: 'default'
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(container.clientWidth, container.clientHeight);
 
   const globeGroup = new THREE.Group();
@@ -472,7 +511,7 @@ function initInteractiveGlobe() {
   window.addEventListener('resize', onResize);
 
   // Performance Observer (Run ONLY when in viewport)
-  let isVisible = true;
+  let isVisible = false;
   let animationFrameId = null;
 
   const observer = new IntersectionObserver((entries) => {
@@ -506,7 +545,82 @@ function initInteractiveGlobe() {
     renderer.render(scene, camera);
   }
 
-  animate();
+}
+
+function initCalendarEmbed() {
+  const calendarWrap = document.querySelector('[data-cal-embed]');
+  const calendarTarget = document.getElementById('my-cal-inline-discovery-call');
+  if (!calendarWrap || !calendarTarget || calendarWrap.dataset.initialized) return;
+
+  const loadCalendar = () => {
+    if (calendarWrap.dataset.initialized) return;
+    calendarWrap.dataset.initialized = 'true';
+
+    (function (C, A, L) {
+      const push = function (api, args) { api.q.push(args); };
+      const doc = C.document;
+      C.Cal = C.Cal || function () {
+        const cal = C.Cal;
+        const args = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          doc.head.appendChild(doc.createElement('script')).src = A;
+          cal.loaded = true;
+        }
+        if (args[0] === L) {
+          const api = function () { push(api, arguments); };
+          const namespace = args[1];
+          api.q = api.q || [];
+          if (typeof namespace === 'string') {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            push(cal.ns[namespace], args);
+            push(cal, ['initNamespace', namespace]);
+          } else {
+            push(cal, args);
+          }
+          return;
+        }
+        push(cal, args);
+      };
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+    window.Cal('init', 'discovery-call', { origin: 'https://app.cal.com' });
+    window.Cal.ns['discovery-call']('inline', {
+      elementOrSelector: '#my-cal-inline-discovery-call',
+      config: { layout: 'month_view', theme: 'dark' },
+      calLink: 'malique-benbow-bbb63n/30min'
+    });
+    window.Cal.ns['discovery-call']('ui', {
+      theme: 'dark',
+      hideEventTypeDetails: false,
+      layout: 'month_view',
+      styles: {
+        cssVarsPerTheme: {
+          dark: {
+            '--cal-bg': '#111111',
+            '--cal-bg-muted': '#111111',
+            '--cal-bg-emphasis': '#111111',
+            '--cal-brand': '#111111'
+          }
+        }
+      }
+    });
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    loadCalendar();
+    return;
+  }
+
+  const calendarObserver = new IntersectionObserver((entries) => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      calendarObserver.disconnect();
+      loadCalendar();
+    }
+  }, { rootMargin: '900px 0px', threshold: 0.01 });
+
+  calendarObserver.observe(calendarWrap);
 }
 
 // Contact Form AJAX Submission (Direct to malique@prontocode.net without leaving the site)

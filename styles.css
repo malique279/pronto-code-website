@@ -40,6 +40,25 @@ body {
   overflow-x: hidden !important;
 }
 
+/* Reveal a ready page from top to bottom without delaying the content behind it. */
+.page-load-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: #f8f6f4;
+  animation: page-load-reveal 0.9s cubic-bezier(0.22, 0.8, 0.22, 1) forwards;
+}
+
+@keyframes page-load-reveal {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(100% 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-load-curtain { display: none; }
+}
+
 /* Remove duplicated background from all sections and wrappers (lets single body pattern show) */
 .page-wrapper,
 .main-wrapper,
@@ -366,6 +385,577 @@ h3 {
     padding: 32px !important;
     min-height: auto !important;
   }
+}
+
+/* The blog filters can wrap on smaller screens, so they use direct pills
+   rather than the shared full-row sliding indicator used elsewhere. */
+.pc-blog-tabs .tab-sliding-indicator {
+  display: none !important;
+}
+
+.pc-blog-tabs .feature-tab-link {
+  display: inline-flex !important;
+  min-height: 2.5rem !important;
+  min-width: 0 !important;
+  padding: 0.625rem 1rem !important;
+  border: 1.5px solid #000 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #000 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+}
+
+.pc-blog-tabs .feature-tab-link.w--current,
+.pc-blog-tabs .feature-tab-link.active,
+.pc-blog-tabs .feature-tab-link:hover {
+  border-color: #000 !important;
+  background: #fbc112 !important;
+  color: #000 !important;
+}
+
+.pc-blog-tabs .feature-tab-link.w--current div,
+.pc-blog-tabs .feature-tab-link.active div,
+.pc-blog-tabs .feature-tab-link:hover div {
+  color: #fff !important;
+}
+
+/* Article-cover photography: full-bleed images with a quiet contrast layer.
+   These rules deliberately supersede the earlier experimental logo-tile art. */
+.pc-blog-cover,
+.pc-article-cover {
+  background: #e9e9e9 !important;
+}
+
+.pc-cover-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pc-blog-cover::before,
+.pc-article-cover::before {
+  z-index: 1;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.48) 0%, rgba(0, 0, 0, 0.04) 55%, rgba(0, 0, 0, 0.12) 100%);
+}
+
+.pc-blog-cover::after,
+.pc-article-cover::after,
+.pc-cover-logo-grid,
+.pc-cover-shape {
+  display: none !important;
+}
+
+/* Blog cover labels use the brand accent: high contrast over photography and
+   visually consistent with the site's primary call-to-action buttons. */
+body .page-wrapper .pc-blog-cover > span.pc-cover-label,
+body .page-wrapper .pc-article-cover > span.pc-cover-label {
+  z-index: 2 !important;
+  border: 1.5px solid #000 !important;
+  background: #fbc112 !important;
+  color: #000 !important;
+  box-shadow: none !important;
+}
+
+/* Blog categories: black at rest, brand yellow when interacted with. */
+.pc-blog-tabs .feature-tab-link.w--current,
+.pc-blog-tabs .feature-tab-link.active,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active) {
+  border-color: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):hover,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):focus-visible,
+.pc-blog-tabs .feature-tab-link.w--current:hover,
+.pc-blog-tabs .feature-tab-link.w--current:focus-visible,
+.pc-blog-tabs .feature-tab-link.active:hover,
+.pc-blog-tabs .feature-tab-link.active:focus-visible {
+  border-color: #000 !important;
+  background-color: #fbc112 !important;
+  color: #000 !important;
+}
+
+/* Compact, right-aligned mobile navigation. Every page link keeps the same
+   pill dimensions, while the call-to-action no longer stretches the drawer. */
+@media screen and (max-width: 991px) {
+  .navbar-menu-wrapper.w-nav-menu {
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .navbar-menu-wrapper .navlink-wrap {
+    align-items: flex-end !important;
+    gap: 0.375rem !important;
+  }
+
+  .navbar-menu-wrapper .navlink-item {
+    justify-content: center !important;
+    min-width: 8.5rem !important;
+    min-height: 2.75rem !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 999px !important;
+  }
+
+  .mobile-menu-actions {
+    display: flex !important;
+    width: 100% !important;
+    align-items: flex-end !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+  }
+
+  .mobile-menu-actions .button-small {
+    width: auto !important;
+    min-height: 2.75rem !important;
+    padding: 0.5rem 1rem !important;
+  }
+}
+
+/* The base typography rule intentionally makes most spans black. Article
+   labels are the exception: their dark backing needs white text. */
+body .page-wrapper .pc-blog-cover > span.pc-cover-label,
+body .page-wrapper .pc-article-cover > span.pc-cover-label {
+  color: #fff !important;
+}
+
+.pc-blog-cover {
+  height: 14rem !important;
+  min-height: 14rem !important;
+}
+
+.pc-article-cover {
+  height: clamp(16rem, 36vw, 25rem) !important;
+  min-height: clamp(16rem, 36vw, 25rem) !important;
+}
+
+.pc-cover-image {
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media screen and (max-width: 767px) {
+  .pc-blog-cover {
+    height: 12rem !important;
+    min-height: 12rem !important;
+  }
+}
+
+.pc-blog-cover .pc-cover-label,
+.pc-article-cover .pc-cover-label {
+  z-index: 2;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.58);
+  color: #fff !important;
+}
+
+/* Logo-led blog covers: real product marks, without decorative graphics that
+   compete with them. */
+.pc-blog-cover::after,
+.pc-article-cover::after {
+  display: none !important;
+}
+
+.pc-cover-automation { background: #151515 !important; }
+.pc-cover-crm { background: #12251f !important; }
+.pc-cover-project { background: #1b1b25 !important; }
+.pc-cover-ai { background: #151c18 !important; }
+
+.pc-cover-label {
+  border-color: rgba(255, 255, 255, 0.75) !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.pc-cover-label * { color: inherit !important; }
+
+.pc-blog-cover .pc-cover-logo-grid {
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+
+.pc-article-cover .pc-cover-logo-grid {
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pc-article-cover .pc-cover-logo-tile {
+  width: clamp(9.5rem, 18vw, 12.5rem);
+  height: 5.25rem;
+}
+
+/* ==========================================================================
+   Pronto Code Blog
+   ========================================================================== */
+.pc-blog-page {
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0 clamp(4rem, 7vw, 6.5rem);
+}
+
+.pc-blog-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+  gap: 2.5rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+
+.pc-blog-intro h1,
+.pc-article-header h1 {
+  max-width: 14ch;
+  margin: 0;
+}
+
+.pc-blog-intro p {
+  max-width: 38rem;
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+.pc-blog-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.pc-blog-tabs .feature-tab-link {
+  min-width: auto;
+  padding: 0.625rem 1rem;
+  border: 1.5px solid #000;
+  border-radius: 999px;
+  background: transparent;
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pc-blog-tabs .feature-tab-link.w--current,
+.pc-blog-tabs .feature-tab-link.active,
+.pc-blog-tabs .feature-tab-link:hover {
+  background: #000;
+  color: #fff;
+}
+
+.pc-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.pc-blog-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  border: 1.5px solid #000;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.88);
+  color: #000;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.pc-blog-card:hover {
+  transform: translateY(-4px);
+  color: #000;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.1);
+}
+
+.pc-blog-cover,
+.pc-article-cover {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #111;
+}
+
+.pc-blog-cover {
+  min-height: 14rem;
+}
+
+.pc-article-cover {
+  min-height: clamp(16rem, 36vw, 25rem);
+  margin-top: 2.5rem;
+  border: 1.5px solid #000;
+  border-radius: 1.5rem;
+}
+
+.pc-blog-cover::before,
+.pc-article-cover::before {
+  position: absolute;
+  z-index: -1;
+  inset: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 1rem;
+  content: '';
+}
+
+.pc-blog-cover::after,
+.pc-article-cover::after {
+  position: absolute;
+  z-index: -1;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: rgba(255, 210, 42, 0.94);
+  box-shadow: 0 0 0 1.25rem rgba(255, 210, 42, 0.18), 0 0 0 2.5rem rgba(255, 210, 42, 0.08);
+  content: '';
+}
+
+.pc-cover-automation { background: linear-gradient(135deg, #1b1b1b 0%, #5a4700 100%); }
+.pc-cover-automation::after { right: 12%; bottom: -5rem; }
+.pc-cover-crm { background: linear-gradient(135deg, #081c2e 0%, #0b4a51 100%); }
+.pc-cover-crm::after { right: -3rem; top: 2rem; }
+.pc-cover-project { background: linear-gradient(135deg, #2f184a 0%, #7a3e34 100%); }
+.pc-cover-project::after { left: 18%; bottom: -6rem; }
+.pc-cover-ai { background: linear-gradient(135deg, #16201a 0%, #233c2a 100%); }
+.pc-cover-ai::after { right: 18%; top: -4rem; }
+
+.pc-cover-label {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pc-cover-shape {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  width: 6.5rem;
+  height: 6.5rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+  font-family: 'Geist', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.pc-cover-logo-grid {
+  position: absolute;
+  right: 1.35rem;
+  bottom: 1.35rem;
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  max-width: calc(100% - 3rem);
+}
+
+.pc-cover-logo-tile {
+  display: grid;
+  width: 8.25rem;
+  height: 3.75rem;
+  place-items: center;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 0.875rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.pc-cover-logo-tile img {
+  display: block;
+  width: 100%;
+  max-width: 7rem;
+  max-height: 2.3rem;
+  object-fit: contain;
+}
+
+.pc-cover-logo-grid + .pc-cover-shape {
+  display: none;
+}
+
+.pc-blog-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.pc-blog-card-meta,
+.pc-article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 1rem;
+  align-items: center;
+  color: #515151;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pc-blog-card h2 {
+  margin: 0.75rem 0;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.2;
+}
+
+.pc-blog-card p {
+  margin: 0;
+  color: #414141;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.pc-blog-card-read {
+  display: inline-flex;
+  margin-top: 1.25rem;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.pc-article-page {
+  padding: clamp(4.5rem, 8vw, 7rem) 0 5rem;
+}
+
+.pc-article-shell {
+  width: min(100% - 2rem, 58rem);
+  margin: 0 auto;
+}
+
+.pc-article-header .badge-post {
+  margin-bottom: 1rem;
+}
+
+.pc-article-header .pc-article-summary {
+  max-width: 44rem;
+  margin: 1.25rem 0 1.5rem;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+}
+
+.pc-article-content {
+  max-width: 46rem;
+  margin: 3.25rem auto 0;
+  font-size: 1.07rem;
+  line-height: 1.8;
+}
+
+.pc-article-content h2 {
+  margin: 3.25rem 0 1rem;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  line-height: 1.18;
+}
+
+.pc-article-content h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.pc-article-content p,
+.pc-article-content ul,
+.pc-article-content ol {
+  margin: 0 0 1.25rem;
+}
+
+.pc-article-content li + li { margin-top: 0.5rem; }
+
+.pc-article-callout {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1.5px solid #000;
+  border-radius: 1rem;
+  background: #fff6d8;
+}
+
+.pc-article-callout p:last-child { margin-bottom: 0; }
+
+.pc-article-cta {
+  margin-top: 3.25rem;
+  padding: 1.75rem;
+  border: 1.5px solid #000;
+  border-radius: 1.25rem;
+  background: #fff;
+  color: #000;
+}
+
+.pc-article-cta h2,
+.pc-article-cta p { color: #000 !important; }
+.pc-article-cta h2 { margin: 0 0 0.75rem; font-size: 1.75rem; }
+.pc-article-cta p { margin-bottom: 1.25rem; }
+
+.pc-article-cta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid #000;
+  border-radius: 999px;
+  background: #fbc112;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pc-blog-footer {
+  padding: 2rem 0;
+  background: #0c0c0e;
+  color: #fff;
+}
+
+.pc-blog-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pc-blog-footer,
+.pc-blog-footer * { color: #fff !important; }
+.pc-blog-footer a { text-decoration: none; }
+.pc-blog-footer-nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; }
+
+@media screen and (max-width: 767px) {
+  .pc-blog-intro { grid-template-columns: 1fr; gap: 1rem; }
+  .pc-blog-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .pc-blog-cover { min-height: 12rem; }
+  .pc-cover-logo-grid { right: 1rem; bottom: 1rem; gap: 0.45rem; }
+  .pc-cover-logo-tile { width: 6.75rem; height: 3.25rem; padding: 0.4rem; }
+  .pc-article-cover { border-radius: 1rem; }
+  .pc-blog-tabs { gap: 0.5rem; }
+  .pc-blog-tabs .feature-tab-link { padding: 0.55rem 0.75rem; font-size: 0.8rem; }
 }
 
 /* Seamless Infinite Marquee Carousel */
@@ -965,23 +1555,28 @@ a.button-small.primary:hover {
   transform: translateX(3px) !important;
 }
 
-/* Inverted Slide Toggle Button in Footer (Yellow Track, Black Handle) */
+/* Matching inverted slide toggles for the hero and footer */
+#hero-slide-toggle .slide-toggle-track,
 .site-footer .slide-toggle-track {
-  background-color: #FBC112 !important;
+  background: linear-gradient(90deg, #FFD22A 0%, #FBC112 100%) !important;
   border: 1.5px solid #FBC112 !important;
 }
 
+#hero-slide-toggle .slide-toggle-handle,
 .site-footer .slide-toggle-handle {
   background-color: #000000 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
 }
 
+#hero-slide-toggle .slide-toggle-handle:active,
 .site-footer .slide-toggle-handle:active {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 }
 
+#hero-slide-toggle .slide-toggle-text,
 .site-footer .slide-toggle-text,
+#hero-slide-toggle .slide-toggle-handle span,
 .site-footer .slide-toggle-handle span,
 .site-footer span.slide-toggle-text {
   color: #ffffff !important;
@@ -989,6 +1584,7 @@ a.button-small.primary:hover {
   opacity: 1 !important;
 }
 
+#hero-slide-toggle .slide-toggle-arrow,
 .site-footer .slide-toggle-arrow {
   color: #000000 !important;
 }
@@ -1174,8 +1770,20 @@ a.button-small.primary:hover {
   .navbar-wrapper {
     position: relative !important;
     display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
     align-items: center !important;
     justify-content: space-between !important;
+  }
+
+  body.menu-open .navbar,
+  body.menu-open .navbar-wrapper {
+    height: auto !important;
+  }
+
+  /* Reserve room for the open drawer so it cannot cover the hero below it. */
+  body.menu-open .navbar {
+    margin-bottom: var(--mobile-menu-space, 0px) !important;
   }
 
   .w-nav-button {
@@ -1243,11 +1851,11 @@ a.button-small.primary:hover {
 
   /* Mobile Nav Dropdown Drawer */
   .navbar-menu-wrapper.w-nav-menu {
-    position: absolute !important;
-    top: calc(100% + 10px) !important;
-    left: 12px !important;
-    right: 12px !important;
-    width: calc(100% - 24px) !important;
+    position: static !important;
+    order: 3 !important;
+    flex-basis: 100% !important;
+    width: 100% !important;
+    margin-top: 10px !important;
     background: #ffffff !important;
     border: 2px solid #000000 !important;
     border-radius: 1.25rem !important;
@@ -1334,5 +1942,296 @@ a.button-small.primary:hover {
       display: none !important;
     }
   }
+}
+
+/* Blog categories use standalone, readable pills rather than the shared
+   sliding indicator used by other tab groups. */
+.pc-blog-tabs > .tab-sliding-indicator {
+  display: none !important;
+}
+
+.pc-blog-tabs .feature-tab-link,
+.pc-blog-tabs .feature-tab-link.w--current,
+.pc-blog-tabs .feature-tab-link.active,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):hover,
+.pc-blog-tabs .feature-tab-link:focus-visible {
+  display: inline-flex !important;
+  min-height: 2.5rem !important;
+  min-width: 0 !important;
+  padding: 0.625rem 1rem !important;
+  border: 1.5px solid #000 !important;
+  border-radius: 999px !important;
+  background: #000 !important;
+  color: #fff !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+}
+
+.pc-blog-tabs .feature-tab-link:hover,
+.pc-blog-tabs .feature-tab-link:focus-visible {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* Outrank the shared tab styles for non-active blog categories. */
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active) {
+  border-color: #000 !important;
+  background-color: #fbc112 !important;
+  color: #000 !important;
+}
+
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):hover,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):focus-visible,
+.pc-blog-tabs .feature-tab-link.w--current:hover,
+.pc-blog-tabs .feature-tab-link.w--current:focus-visible,
+.pc-blog-tabs .feature-tab-link.active:hover,
+.pc-blog-tabs .feature-tab-link.active:focus-visible {
+  border-color: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+/* Keep the real blog photography above the older decorative-cover rules. */
+.pc-blog-cover::before,
+.pc-article-cover::before {
+  z-index: 1 !important;
+  inset: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.48) 0%, rgba(0, 0, 0, 0.04) 55%, rgba(0, 0, 0, 0.12) 100%) !important;
+}
+
+.pc-blog-cover::after,
+.pc-article-cover::after,
+.pc-cover-logo-grid,
+.pc-cover-shape {
+  display: none !important;
+}
+
+/* Final label treatment for the real blog cover photos. */
+body .page-wrapper .pc-blog-cover > span.pc-cover-label,
+body .page-wrapper .pc-article-cover > span.pc-cover-label {
+  z-index: 2 !important;
+  border: 1.5px solid #000 !important;
+  background: #fbc112 !important;
+  color: #000 !important;
+  box-shadow: none !important;
+}
+
+/* Final blog-category interaction states. */
+.pc-blog-tabs .feature-tab-link,
+.pc-blog-tabs .feature-tab-link.w--current,
+.pc-blog-tabs .feature-tab-link.active,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active) {
+  border-color: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):hover,
+.pc-blog-tabs .feature-tab-link:not(.w--current):not(.active):focus-visible,
+.pc-blog-tabs .feature-tab-link.w--current:hover,
+.pc-blog-tabs .feature-tab-link.w--current:focus-visible,
+.pc-blog-tabs .feature-tab-link.active:hover,
+.pc-blog-tabs .feature-tab-link.active:focus-visible {
+  border-color: #000 !important;
+  background-color: #fbc112 !important;
+  color: #000 !important;
+}
+
+@media screen and (max-width: 991px) {
+  .navbar-menu-wrapper.w-nav-menu {
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu .navlink-wrap {
+    display: flex !important;
+    width: 100% !important;
+    align-items: flex-end !important;
+    gap: 0.375rem !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu .navlink-item {
+    align-self: flex-end !important;
+    box-sizing: border-box !important;
+    width: 11rem !important;
+    min-width: 0 !important;
+    min-height: 2.5rem !important;
+    margin: 0 !important;
+    padding: 0.4rem 0.5rem !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu .mobile-menu-actions {
+    width: 100% !important;
+    align-items: flex-end !important;
+    gap: 0 !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu .mobile-menu-actions .button-small {
+    width: auto !important;
+    min-height: 2.5rem !important;
+    margin-left: auto !important;
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu {
+    flex-basis: 12rem !important;
+    width: 12rem !important;
+    min-width: 0 !important;
+    max-width: 12rem !important;
+    margin-left: auto !important;
+    padding: 0.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu .navlink-item:not(.w--current) {
+    border: 1.5px solid #000 !important;
+  }
+}
+
+/* Mobile menu: overlay the page instead of increasing the header's height. */
+@media screen and (max-width: 991px) {
+  .navbar,
+  .container.navbar {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .navbar-wrapper {
+    position: static !important;
+    overflow: visible !important;
+  }
+
+  body.menu-open .navbar {
+    margin-bottom: 0 !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu {
+    position: absolute !important;
+    top: calc(100% + 0.5rem) !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1002 !important;
+    display: flex !important;
+    flex-basis: auto !important;
+    width: 12rem !important;
+    max-width: calc(100vw - 2rem) !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-0.75rem) scale(0.98) !important;
+    transform-origin: top right !important;
+    transition: opacity 160ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 200ms !important;
+  }
+
+  .navbar-menu-wrapper.w-nav-menu.w--open,
+  .navbar-menu-wrapper.w-nav-menu[data-nav-menu-open] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Keep the three-line menu icon; opening the drawer does not turn it into an X. */
+  .w-nav-button.w--open {
+    background-color: #fff !important;
+  }
+
+  .w-nav-button.w--open .w-icon-nav-menu::before,
+  .w-nav-button.w--open .w-icon-nav-menu::after {
+    transform: none !important;
+  }
+
+  .w-nav-button.w--open .w-icon-nav-menu span,
+  .w-nav-button.w--open .w-icon-nav-menu .menu-bar-middle {
+    opacity: 1 !important;
+  }
+
+  /* Always render a clear, conventional three-bar hamburger. */
+  .w-nav-button .w-icon-nav-menu::before,
+  .w-nav-button .w-icon-nav-menu::after,
+  .w-nav-button .w-icon-nav-menu span.menu-bar-middle,
+  .w-nav-button.w--open .w-icon-nav-menu::before,
+  .w-nav-button.w--open .w-icon-nav-menu::after,
+  .w-nav-button.w--open .w-icon-nav-menu span.menu-bar-middle {
+    display: block !important;
+    background-color: #000 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* The CTA uses the same pill dimensions as every menu link. */
+  .navbar-menu-wrapper.w-nav-menu .mobile-menu-actions a.button-small.primary.mobile-nav-call {
+    display: flex !important;
+    align-self: flex-end !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    flex: 0 0 2.5rem !important;
+    width: 11rem !important;
+    max-width: 11rem !important;
+    height: 2.5rem !important;
+    min-width: 0 !important;
+    min-height: 2.5rem !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 0.4rem 0.5rem !important;
+    border: 1.5px solid #000 !important;
+    border-radius: 999px !important;
+    font-size: 0.85rem !important;
+    justify-content: center !important;
+    white-space: normal !important;
+  }
+}
+
+/* Give each contact-field group breathing room before the following label. */
+#contact-form .input-form:not(:last-of-type) {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Long-form version of the yellow rail CTA used on the contact form. */
+#contact-form #submit-btn.button-primary {
+  display: flex !important;
+  width: 100% !important;
+  min-height: 4rem !important;
+  padding: 7px !important;
+  background: linear-gradient(105deg, #f4b808 0%, #fbc112 42%, #ffca2d 100%) !important;
+  border: 1.5px solid #000 !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+#contact-form #submit-btn .button-text-wrap {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 11.5rem !important;
+  min-height: 3rem !important;
+  padding: 0 1.75rem !important;
+  background: #000 !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  box-shadow: 7px 3px 15px rgba(251, 193, 18, 0.62), 0 4px 8px rgba(0, 0, 0, 0.22) !important;
+}
+
+#contact-form #submit-btn .button-text,
+#contact-form #submit-btn .button-text-wrap .button-text {
+  color: #fff !important;
+}
+
+#contact-form #submit-btn .button-arrow-wrap {
+  min-width: 4.5rem !important;
+  min-height: 3rem !important;
+  margin-left: auto !important;
+  padding: 0 1.5rem !important;
+  color: #000 !important;
 }
 
